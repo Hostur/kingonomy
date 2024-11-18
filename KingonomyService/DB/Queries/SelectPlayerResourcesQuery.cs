@@ -6,7 +6,7 @@ namespace KingonomyService.DB.Queries
 {
     public class SelectPlayerResourcesQuery : KingSqlQuery
     {
-        private const string COMMAND =
+        private const string QUERY =
             "SELECT " +
             "r.custom_id, " +
             "pr.value " +
@@ -19,7 +19,7 @@ namespace KingonomyService.DB.Queries
 
         public SelectPlayerResourcesQuery(string playerUnityId)
         {
-            _command = PrepareCommand(COMMAND, playerUnityId);
+            _command = PrepareCommand(QUERY, playerUnityId);
         }
 
         public async Task<List<ResourceModel>> Execute()

@@ -6,7 +6,7 @@ namespace KingonomyService.DB.Queries
 {
     public class SelectPlayerItemsQuery : KingSqlQuery
     {
-        private const string COMMAND =
+        private const string QUERY =
             "SELECT " +
             "pi.id, " +
             "i.custom_id, " +
@@ -20,7 +20,7 @@ namespace KingonomyService.DB.Queries
 
         public SelectPlayerItemsQuery(string playerUnityId)
         {
-            _command = PrepareCommand(COMMAND, playerUnityId);
+            _command = PrepareCommand(QUERY, playerUnityId);
         }
 
         public async Task<List<PlayerItemModel>> Execute()
