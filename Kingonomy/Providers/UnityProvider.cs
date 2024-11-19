@@ -49,14 +49,14 @@ namespace Kingonomy.Providers
                 _authorizationToken = http.Result;
             }
         }
-
+        
         public IEnumerator GetPlayer(IUnityHttp<PlayerModel> http)
         {
             yield return Get(GetUrl(GET_PLAYER), _authorizationToken, http);
         }
 
         #region Resources
-        public IEnumerator GetResources(IUnityHttp<ResourcesModel> http)
+        public IEnumerator GetResources(IUnityHttp<ResourceModel[]> http)
         {
             yield return Get(GetUrl(GET_RESOURCES), _authorizationToken, http);
         }
@@ -64,7 +64,7 @@ namespace Kingonomy.Providers
         /// <summary>
         /// Require extended permissions [KingonomySettings.AuthorizationToken].
         /// </summary>
-        public IEnumerator GetResources(IUnityHttp<ResourcesModel> http, string playerUnityId)
+        public IEnumerator GetResources(IUnityHttp<ResourceModel[]> http, string playerUnityId)
         {
             yield return Get(GetUrl(string.Format(GET_PLAYER_RESOURCES, playerUnityId)), KingonomySettings.AuthorizationToken, http);
         }
@@ -105,7 +105,7 @@ namespace Kingonomy.Providers
 
         #region Items
 
-        public IEnumerator GetItems(IUnityHttp<PlayerItemsModel> http)
+        public IEnumerator GetItems(IUnityHttp<PlayerItemModel[]> http)
         {
             yield return Get(GetUrl(GET_ITEMS), _authorizationToken, http);
         }
@@ -113,7 +113,7 @@ namespace Kingonomy.Providers
         /// <summary>
         /// Require extended permissions [KingonomySettings.AuthorizationToken].
         /// </summary>
-        public IEnumerator GetItems(IUnityHttp<PlayerItemsModel> http, string playerUnityId)
+        public IEnumerator GetItems(IUnityHttp<PlayerItemModel[]> http, string playerUnityId)
         {
             yield return Get(GetUrl(string.Format(GET_PLAYER_ITEMS, playerUnityId)), KingonomySettings.AuthorizationToken, http);
         }
@@ -136,9 +136,9 @@ namespace Kingonomy.Providers
 
         #region Development
 
-        public IEnumerator AddOrModifyItem(IUnityHttp<bool> http, ItemModel itemModel)
+        public IEnumerator AddOrModifyItem(IUnityHttp<bool> http, ItemTemplateModel itemTemplateModel)
         {
-            yield return Post(GetUrl(POST_ADD_OR_MODIFY_ITEM), itemModel, http);
+            yield return Post(GetUrl(POST_ADD_OR_MODIFY_ITEM), itemTemplateModel, http);
         }
 
         #endregion

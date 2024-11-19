@@ -16,18 +16,4 @@ namespace Kingonomy.Models
 
         [Preserve] public ResourceModel(){}
     }
-
-    [Preserve, Serializable]
-    public sealed class ResourcesModel
-    {
-        [Preserve] public ResourceModel[]? Resources { get; set; }
-
-        [Preserve]
-        public ResourcesModel(ResourceModel[]? resources)
-        {
-            Resources = resources;
-        }
-
-        [Preserve] public ResourcesModel(){}
-    }
 }

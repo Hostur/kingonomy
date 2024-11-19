@@ -3,7 +3,7 @@
 namespace Kingonomy.Models
 {
     /// <summary>
-    /// Purchase is an backend entity that represents in-game transaction.
+    /// Purchase is a backend entity that represents in-game transaction.
     /// It can be defined to give player rewards, let him buy something by in-game resources.
     /// Examples:
     /// First login reward - Could contain reward without a price.
@@ -14,7 +14,7 @@ namespace Kingonomy.Models
     public sealed class PurchaseModel
     {
         [Preserve]
-        public PurchaseModel(string purchaseId, ItemsAndResourcesModel reward, ItemsAndResourcesModel price)
+        public PurchaseModel(string purchaseId, string reward, string price)
         {
             PurchaseId = purchaseId;
             Reward = reward;
@@ -22,7 +22,7 @@ namespace Kingonomy.Models
         }
         [Preserve] public PurchaseModel(){}
         [Preserve] public string? PurchaseId { get; set; }
-        [Preserve] public ItemsAndResourcesModel? Reward { get; set; }
-        [Preserve] public ItemsAndResourcesModel? Price { get; set; }
+        [Preserve] public string? Reward { get; set; }
+        [Preserve] public string? Price { get; set; }
     }
 }

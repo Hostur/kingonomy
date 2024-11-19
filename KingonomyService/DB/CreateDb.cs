@@ -10,32 +10,25 @@ namespace KingonomyService.DB
             "CREATE TABLE player " +
             "( " +
             "   id SERIAL PRIMARY KEY, " +
-            "   unity_id VARCHAR(30) NOT NULL UNIQUE " +
-            ");";
-
-        private const string CREATE_RESOURCE =
-            "CREATE TABLE resource " +
-            "( " +
-            "   id SERIAL PRIMARY KEY, " +
-            "   custom_id VARCHAR(30) NOT NULL UNIQUE" +
+            "   unity_id VARCHAR(50) NOT NULL UNIQUE, " +
+            "   metadata JSONB" +
             ");";
 
         private const string CREATE_PLAYER_RESOURCE =
             "CREATE TABLE player_resource " +
             "( " +
             "   player_id INT NOT NULL, " +
-            "   resource_id INT NOT NULL, " +
+            "   resource_id VARCHAR(50) NOT NULL, " +
             "   value NUMERIC DEFAULT 0, " +
             "   PRIMARY KEY (player_id, resource_id), " +
-            "   FOREIGN KEY (player_id) REFERENCES player (id), " +
-            "   FOREIGN KEY (resource_id) REFERENCES resource (id)" +
+            "   FOREIGN KEY (player_id) REFERENCES player (id) " +
             ");";
 
         private const string CREATE_ITEM =
             "CREATE TABLE item " +
             "( " +
             "   id SERIAL PRIMARY KEY, " +
-            "   custom_id VARCHAR(30) NOT NULL UNIQUE, " +
+            "   custom_id VARCHAR(50) NOT NULL UNIQUE, " +
             "   metadata JSONB" +
             ");";
 
@@ -44,10 +37,9 @@ namespace KingonomyService.DB
             "( " +
             "   id SERIAL PRIMARY KEY, " +
             "   player_id INT NOT NULL, " +
-            "   item_id INT NOT NULL, " +
+            "   custom_id VARCHAR(50) NOT NULL UNIQUE, " +
             "   metadata JSONB, " +
-            "   FOREIGN KEY (player_id) REFERENCES player (id), " +
-            "   FOREIGN KEY (item_id) REFERENCES item (id)" +
+            "   FOREIGN KEY (player_id) REFERENCES player (id) " +
             ");";
 
         private const string CREATE_PURCHASE_MODEL =
@@ -60,7 +52,6 @@ namespace KingonomyService.DB
 
         private const string CREATE_DB = "CREATE DATABASE {0});" +
                                          $"{CREATE_PLAYER}\n" +
-                                         $"{CREATE_RESOURCE}\n" +
                                          $"{CREATE_PLAYER_RESOURCE}\n" +
                                          $"{CREATE_ITEM}\n" +
                                          $"{CREATE_PLAYER_ITEM}\n" +

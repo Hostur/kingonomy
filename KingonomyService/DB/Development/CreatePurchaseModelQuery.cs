@@ -17,6 +17,11 @@ namespace KingonomyService.DB.Development
 
         public async Task<bool> Execute()
         {
+            // nA LOGOWAniu gracza
+            // Pobierz przedmiot o id X
+            // Pobierz metadane o id Y
+            // Porownaj z CurrentDay 
+            // 
             try
             {
                 await ExecuteNoQueryAsync(_command).ConfigureAwait(false);

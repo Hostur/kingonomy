@@ -7,7 +7,7 @@ namespace KingonomyService.DB
     {
         #region Items
 
-        public async Task<List<ItemModel>> GetItems()
+        public async Task<List<ItemTemplateModel>> GetItems()
         {
             var query = new SelectItemsQuery();
             return await query.Execute().ConfigureAwait(false);

@@ -15,11 +15,11 @@ namespace KingonomyService.DB.Queries
             _command = PrepareCommand(QUERY);
         }
 
-        public async Task<List<ItemModel>> Execute()
+        public async Task<List<ItemTemplateModel>> Execute()
         {
             try
             {
-                List<ItemModel> result = new List<ItemModel>();
+                List<ItemTemplateModel> result = new List<ItemTemplateModel>();
                 await using (var reader = await GetDataReaderAsync(_command).ConfigureAwait(false))
                 {
                     while (reader.HasRows && await reader.ReadAsync())
@@ -27,7 +27,7 @@ namespace KingonomyService.DB.Queries
                         int id = reader.GetInt32(0);
                         string customId = reader.GetString(1);
                         string metadata = reader.GetString(2);
-                        result.Add(new ItemModel(customId, metadata));
+                        result.Add(new ItemTemplateModel(customId, metadata));
                     }
 
                     await reader.CloseAsync();
