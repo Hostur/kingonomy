@@ -4,28 +4,30 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class SelectResourcesQuery : KingSqlQuery
+    public sealed class SelectItemsQuery : KingSqlQuery
     {
-        private const string QUERY = "SELECT custom_id FROM resource;";
+        private const string QUERY = "SELECT id, custom_id, metadata FROM item;";
 
         private readonly NpgsqlCommand _command;
 
-        public SelectResourcesQuery()
+        public SelectItemsQuery()
         {
             _command = PrepareCommand(QUERY);
         }
 
-        public async Task<List<ResourceModel>> Execute()
+        public async Task<List<ItemModel>> Execute()
         {
             try
             {
-                List<ResourceModel> result = new List<ResourceModel>();
+                List<ItemModel> result = new List<ItemModel>();
                 await using (var reader = await GetDataReaderAsync(_command).ConfigureAwait(false))
                 {
                     while (reader.HasRows && await reader.ReadAsync())
                     {
-                        string resourceId = reader.GetString(0);
-                        result.Add(new ResourceModel(resourceId, 0));
+                        int id = reader.GetInt32(0);
+                        string customId = reader.GetString(1);
+                        string metadata = reader.GetString(2);
+                        result.Add(new ItemModel(customId, metadata));
                     }
 
                     await reader.CloseAsync();

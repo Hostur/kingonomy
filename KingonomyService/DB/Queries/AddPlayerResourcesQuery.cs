@@ -19,9 +19,9 @@ namespace KingonomyService.DB.Queries
 
         private readonly NpgsqlCommand _command;
 
-        public AddPlayerResourcesQuery(int playerIda)
+        public AddPlayerResourcesQuery(int playerId)
         {
-            _command = PrepareCommand(QUERY, playerIda);
+            _command = PrepareCommand(QUERY, playerId);
         }
 
         public async Task<bool> Execute()
