@@ -3,13 +3,16 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public class DeletePlayerItemQuery : KingSqlQuery
+    public sealed class AddItemTemplateQuery : KingSqlQuery
     {
-        private const string QUERY = "DELETE FROM player_item WHERE player_id = @0 AND id = @1;";
+        private const string QUERY =
+            "INSERT INTO item_template (custom_id, metadata) VALUES (@0, @1);";
+
         private readonly NpgsqlCommand _command;
-        public DeletePlayerItemQuery(int playerId, int itemId)
+
+        public AddItemTemplateQuery(string customId, string metadata)
         {
-            _command = PrepareCommand(QUERY, playerId, itemId);
+            _command = PrepareCommand(QUERY, customId, metadata);
         }
 
         public async Task<bool> Execute()

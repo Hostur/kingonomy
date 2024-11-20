@@ -25,13 +25,24 @@ namespace KingonomyService.DB
             return await query.Execute().ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Add new item to player.
-        /// </summary>
-        /// <param name="playerId">Player serial id.</param>
-        /// <param name="customId">Item template serial id.</param>
-        /// <param name="metadata">Item metadata, can be copied from template.</param>
-        /// <returns>Value indicating whether operation succeed.</returns>
+        public async Task<bool> AddItemTemplate(string customId, string metadata)
+        {
+            var query = new AddItemTemplateQuery(customId, metadata);
+            return await query.Execute().ConfigureAwait(false);
+        }
+
+        public async Task<bool> DeleteItemTemplate(string customId)
+        {
+            var query = new DeleteItemTemplateQuery(customId);
+            return await query.Execute().ConfigureAwait(false);
+        }
+
+        public async Task<bool> DeleteItemTemplate(int id)
+        {
+            var query = new DeleteItemTemplateQuery(id);
+            return await query.Execute().ConfigureAwait(false);
+        }
+
         public async Task<bool> AddPlayerItem(int playerId, string customId, string metadata)
         {
             var query = new AddPlayerItemQuery(playerId, customId, metadata);
