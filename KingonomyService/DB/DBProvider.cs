@@ -7,9 +7,21 @@ namespace KingonomyService.DB
     {
         #region Items
 
-        public async Task<List<ItemTemplateModel>> GetItems()
+        public async Task<List<ItemTemplateModel>> GetItemTemplates()
         {
-            var query = new SelectItemsQuery();
+            var query = new SelectItemTemplatesQuery();
+            return await query.Execute().ConfigureAwait(false);
+        }
+
+        public async Task<List<PlayerItemModel>> GetItems(int playerId)
+        {
+            var query = new SelectPlayerItemsQuery(playerId);
+            return await query.Execute().ConfigureAwait(false);
+        }
+
+        public async Task<List<PlayerItemModel>> GetItems(string playerUnityId)
+        {
+            var query = new SelectPlayerItemsQuery(playerUnityId);
             return await query.Execute().ConfigureAwait(false);
         }
 
@@ -17,12 +29,12 @@ namespace KingonomyService.DB
         /// Add new item to player.
         /// </summary>
         /// <param name="playerId">Player serial id.</param>
-        /// <param name="itemId">Item template serial id.</param>
+        /// <param name="customId">Item template serial id.</param>
         /// <param name="metadata">Item metadata, can be copied from template.</param>
         /// <returns>Value indicating whether operation succeed.</returns>
-        public async Task<bool> AddPlayerItem(int playerId, int itemId, string metadata)
+        public async Task<bool> AddPlayerItem(int playerId, string customId, string metadata)
         {
-            var query = new AddPlayerItemQuery(playerId, itemId, metadata);
+            var query = new AddPlayerItemQuery(playerId, customId, metadata);
             return await query.Execute().ConfigureAwait(false);
         }
 
@@ -41,20 +53,21 @@ namespace KingonomyService.DB
 
         #region Resources
 
-        public async Task<List<ResourceModel>> GetResources()
+        public async Task<List<ResourceModel>> GetResources(int playerId)
         {
-            var query = new SelectResourcesQuery();
+            var query = new SelectPlayerResourcesQuery(playerId);
             return await query.Execute().ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Add all the resources that player doesn't have yet to the player.
-        /// Kind of migration.
-        /// </summary>
-        /// <returns>Value indicating whether operation succeed.</returns>
-        public async Task<bool> AddPlayerResources(int playerId)
+        public async Task<List<ResourceModel>> GetResources(string playerUnityId)
         {
-            var query = new AddPlayerResourcesQuery(playerId);
+            var query = new SelectPlayerResourcesQuery(playerUnityId);
+            return await query.Execute().ConfigureAwait(false);
+        }
+
+        public async Task<bool> AddPlayerResources(int playerId, string resourceId, float value)
+        {
+            var query = new AddPlayerResourceQuery(playerId, resourceId, value);
             return await query.Execute().ConfigureAwait(false);
         }
 

@@ -14,10 +14,7 @@ namespace KingonomyService.Services
             _dbProvider = dbProvider;
         }
 
-        public async Task<ItemsModel> GetItems()
-        {
-            var items = await _dbProvider.GetItems().ConfigureAwait(false);
-            return new ItemsModel(items.ToArray());
-        }
+        public async Task<List<ItemTemplateModel>> GetItemTemplates() => await _dbProvider.GetItemTemplates().ConfigureAwait(false);
+        public async Task<List<PlayerItemModel>> GetItems(int playerId) => await _dbProvider.GetItems(playerId).ConfigureAwait(false);
     }
 }

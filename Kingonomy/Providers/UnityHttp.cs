@@ -51,7 +51,7 @@ namespace Kingonomy.Providers
         {
             if (string.IsNullOrEmpty(token))
             {
-                http.OnError?.Invoke("Provided not authorized. Authorization token not set. Call Initialize first.");
+                http.OnError?.Invoke("Provider not authorized. Authorization token not set. Call Initialize first.");
                 yield break;
             }
 

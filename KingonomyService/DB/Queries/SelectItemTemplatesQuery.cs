@@ -4,13 +4,13 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class SelectItemsQuery : KingSqlQuery
+    public sealed class SelectItemTemplatesQuery : KingSqlQuery
     {
-        private const string QUERY = "SELECT id, custom_id, metadata FROM item;";
+        private const string QUERY = "SELECT id, metadata FROM item_template;";
 
         private readonly NpgsqlCommand _command;
 
-        public SelectItemsQuery()
+        public SelectItemTemplatesQuery()
         {
             _command = PrepareCommand(QUERY);
         }
@@ -24,10 +24,9 @@ namespace KingonomyService.DB.Queries
                 {
                     while (reader.HasRows && await reader.ReadAsync())
                     {
-                        int id = reader.GetInt32(0);
-                        string customId = reader.GetString(1);
-                        string metadata = reader.GetString(2);
-                        result.Add(new ItemTemplateModel(customId, metadata));
+                        string id = reader.GetString(0);
+                        string metadata = reader.GetString(1);
+                        result.Add(new ItemTemplateModel(id, metadata));
                     }
 
                     await reader.CloseAsync();

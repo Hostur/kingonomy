@@ -18,12 +18,10 @@ namespace Kingonomy.Models
     {
         [Preserve] public string UnityId { get; set; }
         [Preserve] public string AccessToken { get; set; }
-        [Preserve] public bool Create { get; set; }
-        [Preserve] public UnityAuthorizationModel(string unityId, string accessToken, bool create)
+        [Preserve] public UnityAuthorizationModel(string unityId, string accessToken)
         {
             UnityId = unityId;
             AccessToken = accessToken;
-            Create = create;
         }
     }
 }

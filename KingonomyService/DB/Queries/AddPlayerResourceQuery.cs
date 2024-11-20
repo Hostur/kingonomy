@@ -3,21 +3,20 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class AddPlayerItemQuery : KingSqlQuery
+    public sealed class AddPlayerResourceQuery : KingSqlQuery
     {
-        private const string QUERY =
-            "INSERT INTO player_item (player_id, custom_id, metadata) VALUES (@0, @1, @2);";
+        private const string QUERY = "INSERT INTO player_resource (player_id, resource_id, value) VALUES (@0, @1, @2);";
 
         private readonly NpgsqlCommand _command;
 
-        public AddPlayerItemQuery(int playerId, string customId, string metadata)
+        public AddPlayerResourceQuery(int playerId, string resourceId, float value)
         {
-            _command = PrepareCommand(QUERY, playerId, customId, metadata);
+            _command = PrepareCommand(QUERY, playerId, resourceId, value);
         }
 
         public async Task<bool> Execute()
         {
-            try
+            try 
             {
                 await ExecuteNoQueryAsync(_command).ConfigureAwait(false);
                 return true;

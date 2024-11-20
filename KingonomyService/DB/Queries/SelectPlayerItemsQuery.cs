@@ -9,18 +9,31 @@ namespace KingonomyService.DB.Queries
         private const string QUERY =
             "SELECT " +
             "pi.id, " +
-            "i.custom_id, " +
+            "pi.custom_id, " +
             "pi.metadata " +
             "FROM player p " +
             "JOIN player_item pi ON pi.player_id = p.id " +
-            "JOIN item i ON i.id = pi.item_id " +
             "WHERE p.unity_id = @0";
+
+        private const string QUERY_2 =
+            "SELECT " +
+            "pi.id, " +
+            "pi.custom_id, " +
+            "pi.metadata " +
+            "FROM player p " +
+            "JOIN player_item pi ON pi.player_id = p.id " +
+            "WHERE p.id = @0";
 
         private readonly NpgsqlCommand _command;
 
         public SelectPlayerItemsQuery(string playerUnityId)
         {
             _command = PrepareCommand(QUERY, playerUnityId);
+        }
+
+        public SelectPlayerItemsQuery(int playerId)
+        {
+            _command = PrepareCommand(QUERY_2, playerId);
         }
 
         public async Task<List<PlayerItemModel>> Execute()

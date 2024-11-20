@@ -24,8 +24,8 @@ namespace KingonomyService.DB
             "   FOREIGN KEY (player_id) REFERENCES player (id) " +
             ");";
 
-        private const string CREATE_ITEM =
-            "CREATE TABLE item " +
+        private const string CREATE_ITEM_TEMPLATE =
+            "CREATE TABLE item_template " +
             "( " +
             "   id SERIAL PRIMARY KEY, " +
             "   custom_id VARCHAR(50) NOT NULL UNIQUE, " +
@@ -53,7 +53,7 @@ namespace KingonomyService.DB
         private const string CREATE_DB = "CREATE DATABASE {0});" +
                                          $"{CREATE_PLAYER}\n" +
                                          $"{CREATE_PLAYER_RESOURCE}\n" +
-                                         $"{CREATE_ITEM}\n" +
+                                         $"{CREATE_ITEM_TEMPLATE}\n" +
                                          $"{CREATE_PLAYER_ITEM}\n" +
                                          $"{CREATE_PURCHASE_MODEL}\n";
         #endregion
