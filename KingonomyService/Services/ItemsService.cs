@@ -16,5 +16,7 @@ namespace KingonomyService.Services
 
         public async Task<List<ItemTemplateModel>> GetItemTemplates() => await _dbProvider.GetItemTemplates().ConfigureAwait(false);
         public async Task<List<PlayerItemModel>> GetItems(int playerId) => await _dbProvider.GetItems(playerId).ConfigureAwait(false);
+        public async Task<bool> AddPlayerItem(int playerId, string customId, string metadata) => await _dbProvider.AddPlayerItem(playerId, customId, metadata).ConfigureAwait(false);
+        public async Task<bool> DeletePlayerItem(int playerId, int itemId) => await _dbProvider.DeletePlayerItem(playerId, itemId).ConfigureAwait(false);
     }
 }
