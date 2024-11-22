@@ -39,6 +39,24 @@ namespace KingonomyService.Services
             return result;
         }
 
+        public async Task<bool> IncreasePlayerResource(int playerId, string resourceId, float value)
+        {
+            bool result = await _dbProvider.IncreasePlayerResource(playerId, resourceId, value);
+            if (result)
+                await RefreshResourcesCache(playerId);
+
+            return result;
+        }
+
+        public async Task<bool> DecreasePlayerResource(int playerId, string resourceId, float value)
+        {
+            bool result = await _dbProvider.DecreasePlayerResource(playerId, resourceId, value);
+            if (result)
+                await RefreshResourcesCache(playerId);
+
+            return result;
+        }
+
         private async Task RefreshResourcesCache(int playerId)
         {
             string id = $"resources_{playerId}";

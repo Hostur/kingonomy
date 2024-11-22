@@ -1,4 +1,5 @@
 ﻿using Kingonomy.Models;
+using KingonomyService.DB.Development;
 using KingonomyService.DB.Queries;
 
 namespace KingonomyService.DB
@@ -82,17 +83,39 @@ namespace KingonomyService.DB
             return await query.Execute().ConfigureAwait(false);
         }
 
-        public async Task<bool> IncreasePlayerResource(int playerId, int itemId, float value)
+        public async Task<bool> IncreasePlayerResource(int playerId, string itemId, float value)
         {
             var query = new ModifyResourceValueQuery(playerId, itemId, MathF.Abs(value));
             return await query.Execute().ConfigureAwait(false);
         }
 
-        public async Task<bool> DecreasePlayerResource(int playerId, int itemId, float value)
+        public async Task<bool> DecreasePlayerResource(int playerId, string itemId, float value)
         {
             var query = new ModifyResourceValueQuery(playerId, itemId, -MathF.Abs(value));
             return await query.Execute().ConfigureAwait(false);
         }
+        #endregion
+
+        #region Purchases
+
+        public async Task<bool> AddPurchaseModel(string id, string reward, string price)
+        {
+            var query = new AddPurchaseModelQuery(id, reward, price);
+            return await query.Execute().ConfigureAwait(false);
+        }
+
+        public async Task<List<PurchaseModel>> GetPurchaseModels()
+        {
+            var query = new SelectPurchaseModelsQuery();
+            return await query.Execute().ConfigureAwait(false);
+        }
+
+        public async Task<bool> DeletePurchaseModel(string id)
+        {
+            var query = new DeletePurchaseModelQuery(id);
+            return await query.Execute().ConfigureAwait(false);
+        }
+
         #endregion
     }
 }

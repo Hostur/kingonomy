@@ -10,7 +10,7 @@ namespace KingonomyService.DB.Queries
 
         private readonly NpgsqlCommand _command;
 
-        public ModifyResourceValueQuery(int playerId, int resourceId, float value)
+        public ModifyResourceValueQuery(int playerId, string resourceId, float value)
         {
             _command = PrepareCommand(QUERY, playerId, resourceId, value);
         }

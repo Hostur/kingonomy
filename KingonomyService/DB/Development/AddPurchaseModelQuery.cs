@@ -3,16 +3,16 @@ using Npgsql;
 
 namespace KingonomyService.DB.Development
 {
-    public sealed class CreateItemQuery : KingSqlQuery
+    public class AddPurchaseModelQuery : KingSqlQuery
     {
         private const string QUERY =
-            "INSERT INTO item (custom_id, metadata) VALUES (@0, @1);";
+            "INSERT INTO purchase_model (id, reward, price) VALUES (@0, @1, @2);";
 
         private readonly NpgsqlCommand _command;
 
-        public CreateItemQuery(string itemId, string metadata)
+        public AddPurchaseModelQuery(string id, string reward, string price)
         {
-            _command = PrepareCommand(QUERY, itemId, metadata);
+            _command = PrepareCommand(QUERY, id, reward, price);
         }
 
         public async Task<bool> Execute()

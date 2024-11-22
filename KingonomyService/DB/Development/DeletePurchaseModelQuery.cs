@@ -3,25 +3,20 @@ using Npgsql;
 
 namespace KingonomyService.DB.Development
 {
-    public class CreatePurchaseModelQuery : KingSqlQuery
+    public sealed class DeletePurchaseModelQuery : KingSqlQuery
     {
         private const string QUERY =
-            "INSERT INTO purchase_model (id, reward, price) VALUES (@0, @1, @2);";
+            "DELETE FROM purchase_model WHERE id = @0;";
 
         private readonly NpgsqlCommand _command;
 
-        public CreatePurchaseModelQuery(string id, string reward, string price)
+        public DeletePurchaseModelQuery(string id)
         {
-            _command = PrepareCommand(QUERY, id, reward, price);
+            _command = PrepareCommand(QUERY, id);
         }
 
         public async Task<bool> Execute()
         {
-            // nA LOGOWAniu gracza
-            // Pobierz przedmiot o id X
-            // Pobierz metadane o id Y
-            // Porownaj z CurrentDay 
-            // 
             try
             {
                 await ExecuteNoQueryAsync(_command).ConfigureAwait(false);
