@@ -37,6 +37,12 @@ namespace KingonomyService.DB.Base
             return await command.ExecuteReaderAsync().ConfigureAwait(false);
         }
 
+        protected async Task<DbDataReader> GetDataReaderAsync(NpgsqlCommand command, NpgsqlConnection connection)
+        {
+            command.Connection = connection;
+            return await command.ExecuteReaderAsync().ConfigureAwait(false);
+        }
+
         protected async Task<object> ExecuteScalarAsync(NpgsqlCommand command)
         {
             NpgsqlConnection connection = null;

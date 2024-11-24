@@ -11,6 +11,7 @@ namespace KingonomyService.DB
             "( " +
             "   id SERIAL PRIMARY KEY, " +
             "   unity_id VARCHAR(50) NOT NULL UNIQUE, " +
+            "   role BYTE, " +
             "   metadata JSONB" +
             ");";
 

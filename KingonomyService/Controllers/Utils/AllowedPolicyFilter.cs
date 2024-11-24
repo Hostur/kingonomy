@@ -17,9 +17,9 @@ namespace KingonomyService.Controllers
 
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
-            var authorized = await _authorization.AuthorizeAsync(context.HttpContext.User, context.HttpContext, policy);
+            //var authorized = await _authorization.AuthorizeAsync(context.HttpContext.User, context.HttpContext, policy);
 
-            context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
+            //context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
         }
     }
 }

@@ -63,5 +63,24 @@ namespace KingonomyService.DB.Queries
                 await PushConnectionBack(_command.Connection).ConfigureAwait(false);
             }
         }
+
+        public async Task<List<ResourceModel>> Execute(NpgsqlConnection connection)
+        {
+            List<ResourceModel> result = new List<ResourceModel>();
+            await using (var reader = await GetDataReaderAsync(_command, connection).ConfigureAwait(false))
+            {
+                while (reader.HasRows && await reader.ReadAsync())
+                {
+                    string id = reader.GetString(0);
+                    float value = reader.GetFloat(1);
+                    result.Add(new ResourceModel(id, value));
+                }
+
+                await reader.CloseAsync();
+            }
+
+            return result;
+        }
+
     }
 }
