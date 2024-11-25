@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class DeleteItemTemplateQuery : KingSqlQuery
+    internal sealed class DeleteItemTemplateQuery : KingSqlQuery
     {
         private const string QUERY = "DELETE FROM item_template WHERE id = @0;";
         private const string QUERY_2 = "DELETE FROM item_template WHERE custom_id = @0;";

@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class ModifyResourceValueQuery : KingSqlQuery
+    internal sealed class ModifyResourceValueQuery : KingSqlQuery
     {
         private const string QUERY =
             "UPDATE player_resource SET value = value + @2 WHERE player_id = @0 AND resource_id = @1;";

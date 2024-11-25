@@ -4,7 +4,7 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public class SelectPlayerResourcesQuery : KingSqlQuery
+    internal class SelectPlayerResourcesQuery : KingSqlQuery
     {
         private const string QUERY =
             "SELECT " +

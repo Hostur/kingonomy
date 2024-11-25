@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class AddPlayerItemQuery : KingSqlQuery
+    internal sealed class AddPlayerItemQuery : KingSqlQuery
     {
         private const string QUERY =
             "INSERT INTO player_item (player_id, custom_id, metadata) VALUES (@0, @1, @2);";

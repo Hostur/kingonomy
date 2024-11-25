@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class ModifyPlayerItemQuery : KingSqlQuery
+    internal sealed class ModifyPlayerItemQuery : KingSqlQuery
     {
         private const string QUERY =
             "UPDATE player_item SET metadata = @2 WHERE player_id = @0 AND item_id = @1;";

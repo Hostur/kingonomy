@@ -4,7 +4,7 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public sealed class SelectItemTemplatesQuery : KingSqlQuery
+    internal sealed class SelectItemTemplatesQuery : KingSqlQuery
     {
         private const string QUERY = "SELECT id, metadata FROM item_template;";
 

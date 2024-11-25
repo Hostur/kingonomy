@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace KingonomyService.DB.Queries
 {
-    public class DeletePlayerItemQuery : KingSqlQuery
+    internal class DeletePlayerItemQuery : KingSqlQuery
     {
         private const string QUERY = "DELETE FROM player_item WHERE player_id = @0 AND id = @1;";
         private readonly NpgsqlCommand _command;
