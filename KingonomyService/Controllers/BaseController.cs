@@ -5,6 +5,8 @@ namespace KingonomyService.Controllers
 {
     public abstract class BaseController : Controller
     {
-        public PlayerModel Player { get; private set; }
+        private readonly IHttpContextAccessor? _httpContextAccessor;
+        protected BaseController(IHttpContextAccessor httpContextAccessor) => _httpContextAccessor = httpContextAccessor;
+        public PlayerModel? Player => (PlayerModel)_httpContextAccessor?.HttpContext?.Items["user"]!;
     }
 }

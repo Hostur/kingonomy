@@ -20,7 +20,6 @@ namespace KingonomyService.DB.Queries
         {
             try
             {
-                // Creates player
                 var id = await ExecuteScalarAsync(_command).ConfigureAwait(false);
                 return await new GetPlayerQuery(_unityId).Execute().ConfigureAwait(false);
             }
@@ -29,16 +28,13 @@ namespace KingonomyService.DB.Queries
                 return null;
             }
         }
-
         
         //public async Task<PlayerModel?> Execute2()
         //{
         //    var connection = await GetConnection().ConfigureAwait(false);
         //    var transaction = await connection.BeginTransactionAsync().ConfigureAwait(false);
-
         //    try
         //    {
-
         //    }
         //    catch
         //    {
@@ -48,7 +44,6 @@ namespace KingonomyService.DB.Queries
         //    {
         //        await PushConnectionBack(connection).ConfigureAwait(false);
         //    }
-
         //    return null;
         //}
     }

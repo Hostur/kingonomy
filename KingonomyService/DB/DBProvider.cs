@@ -1,4 +1,5 @@
-﻿using Kingonomy.Models;
+﻿using Kingonomy;
+using Kingonomy.Models;
 using KingonomyService.DB.Development;
 using KingonomyService.DB.Queries;
 
@@ -7,12 +8,6 @@ namespace KingonomyService.DB
     public sealed class DBProvider
     {
         #region Items
-
-        public async Task<List<ItemTemplateModel>> GetItemTemplates()
-        {
-            var query = new SelectItemTemplatesQuery();
-            return await query.Execute().ConfigureAwait(false);
-        }
 
         public async Task<List<PlayerItemModel>> GetItems(int playerId)
         {
@@ -23,24 +18,6 @@ namespace KingonomyService.DB
         public async Task<List<PlayerItemModel>> GetItems(string playerUnityId)
         {
             var query = new SelectPlayerItemsQuery(playerUnityId);
-            return await query.Execute().ConfigureAwait(false);
-        }
-
-        public async Task<bool> AddItemTemplate(string customId, string metadata)
-        {
-            var query = new AddItemTemplateQuery(customId, metadata);
-            return await query.Execute().ConfigureAwait(false);
-        }
-
-        public async Task<bool> DeleteItemTemplate(string customId)
-        {
-            var query = new DeleteItemTemplateQuery(customId);
-            return await query.Execute().ConfigureAwait(false);
-        }
-
-        public async Task<bool> DeleteItemTemplate(int id)
-        {
-            var query = new DeleteItemTemplateQuery(id);
             return await query.Execute().ConfigureAwait(false);
         }
 
@@ -116,6 +93,14 @@ namespace KingonomyService.DB
             return await query.Execute().ConfigureAwait(false);
         }
 
+        #endregion
+
+        #region Users
+        public async Task<PlayerModel?> AddPlayer(string unityId, Role role, string metadata)
+        {
+            var query = new AddPlayerQuery(unityId, role, metadata);
+            return await query.Execute().ConfigureAwait(false);
+        }
         #endregion
     }
 }

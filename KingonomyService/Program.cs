@@ -1,3 +1,6 @@
+using KingonomyService.DB;
+using KingonomyService.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<DBProvider>();
+builder.Services.AddSingleton<ItemsService>();
+builder.Services.AddSingleton<ResourcesService>();
+builder.Services.AddSingleton<UnityAuthorizationService>();
+builder.Services.AddSingleton<PurchaseService>();
+builder.Services.AddSingleton<UserService>();
+
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = ""; // ToDo Get configuration connection string for redis.

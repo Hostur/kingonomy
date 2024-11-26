@@ -16,47 +16,6 @@ namespace KingonomyService.Services
             _cache = cache;
         }
 
-        public async Task<bool> AddItemTemplate(string customId, string metadata)
-        {
-            var result = await _dbProvider.AddItemTemplate(customId, metadata);
-            if(result)
-                await RefreshItemTemplatesCache().ConfigureAwait(false);
-
-            return result;
-        }
-
-        public async Task<bool> DeleteItemTemplate(string customId)
-        {
-            var result = await _dbProvider.DeleteItemTemplate(customId);
-            if (result)
-                await RefreshItemTemplatesCache().ConfigureAwait(false);
-
-            return result;
-        }
-
-        public async Task<bool> DeleteItemTemplate(int id)
-        {
-            var result = await _dbProvider.DeleteItemTemplate(id);
-            if (result)
-                await RefreshItemTemplatesCache().ConfigureAwait(false);
-
-            return result;
-        }
-
-        public async Task<ItemTemplateModel[]> GetItemTemplates()
-        {
-            const string id = "item_templates";
-            var result = await _cache.GetRecordAsync<ItemTemplateModel[]>(id);
-            if (result == null)
-            {
-                var dbResult = await new SelectItemTemplatesQuery().Execute();
-                result = dbResult.ToArray();
-                await _cache.SetRecordAsync(id, result, TimeSpan.MaxValue, TimeSpan.MaxValue);
-            }
-
-            return result;
-        }
-
         public async Task<PlayerItemModel[]> GetItems(int playerId)
         {
             string id = $"items_{playerId}";
@@ -101,13 +60,6 @@ namespace KingonomyService.Services
         {
             string id = $"items_{playerId}";
             var dbResult = await new SelectPlayerItemsQuery(playerId).Execute();
-            await _cache.SetRecordAsync(id, dbResult.ToArray(), TimeSpan.MaxValue, TimeSpan.MaxValue);
-        }
-
-        private async Task RefreshItemTemplatesCache()
-        {
-            string id = $"item_templates";
-            var dbResult = await new SelectItemTemplatesQuery().Execute();
             await _cache.SetRecordAsync(id, dbResult.ToArray(), TimeSpan.MaxValue, TimeSpan.MaxValue);
         }
     }
