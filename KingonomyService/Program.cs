@@ -22,6 +22,12 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbProvider = scope.ServiceProvider.GetRequiredService<DBProvider>();
+    await dbProvider.AssertDb();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

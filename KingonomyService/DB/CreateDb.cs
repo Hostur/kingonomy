@@ -3,11 +3,11 @@ using Npgsql;
 
 namespace KingonomyService.DB
 {
-    public class CreateDb : KingSqlQuery
+    public sealed class CreateDb : KingSqlQuery
     {
         #region SQL
         private const string CREATE_PLAYER =
-            "CREATE TABLE player " +
+            "CREATE TABLE IF NOT EXISTS player " +
             "( " +
             "   id SERIAL PRIMARY KEY, " +
             "   unity_id VARCHAR(50) NOT NULL UNIQUE, " +
@@ -16,7 +16,7 @@ namespace KingonomyService.DB
             ");";
 
         private const string CREATE_PLAYER_ITEM =
-            "CREATE TABLE player_item " +
+            "CREATE TABLE IF NOT EXISTS player_item " +
             "( " +
             "   id SERIAL PRIMARY KEY, " +
             "   player_id INT NOT NULL, " +
@@ -28,34 +28,37 @@ namespace KingonomyService.DB
             ");";
 
         private const string CREATE_PURCHASE_MODEL =
-            "CREATE TABLE purchase_model " +
+            "CREATE TABLE IF NOT EXISTS purchase_model " +
             "(" +
             "   id VARCHAR(30) PRIMARY KEY, " +
             "   reward JSONB NOT NULL, " +
             "   price JSONB DEFAULT NULL " +
             ");";
 
-        private const string CREATE_DB = "CREATE DATABASE {0});" +
-                                         $"{CREATE_PLAYER}\n" +
-                                         $"{CREATE_PLAYER_ITEM}\n" +
-                                         $"{CREATE_PURCHASE_MODEL}\n";
         #endregion
 
-        private readonly NpgsqlCommand _command;
-        public CreateDb(string dbName)
+        private readonly NpgsqlCommand _command1;
+        private readonly NpgsqlCommand _command2;
+        private readonly NpgsqlCommand _command3;
+        public CreateDb()
         {
-            _command = PrepareCommand(CREATE_DB, dbName);
+            _command1 = PrepareCommand(CREATE_PLAYER);
+            _command2 = PrepareCommand(CREATE_PLAYER_ITEM);
+            _command3 = PrepareCommand(CREATE_PURCHASE_MODEL);
         }
 
         public async Task Execute()
         {
+            var connection = await GetConnection().ConfigureAwait(false);
             try
             {
-                await ExecuteNoQueryAsync(_command).ConfigureAwait(false);
+                await ExecuteNoQueryAsync(_command1, connection).ConfigureAwait(false);
+                await ExecuteNoQueryAsync(_command2, connection).ConfigureAwait(false);
+                await ExecuteNoQueryAsync(_command3, connection).ConfigureAwait(false);
             }
             finally
             {
-                await PushConnectionBack(_command.Connection).ConfigureAwait(false);
+                await PushConnectionBack(connection).ConfigureAwait(false);
             }
         }
     }

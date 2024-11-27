@@ -7,6 +7,12 @@ namespace KingonomyService.DB
 {
     public sealed class DBProvider
     {
+        public async Task AssertDb()
+        {
+            var query = new CreateDb();
+            await query.Execute().ConfigureAwait(false);
+        }
+
         #region Items
 
         public async Task<List<PlayerItemModel>> GetItems(int playerId)
