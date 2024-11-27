@@ -14,15 +14,16 @@ namespace Kingonomy.Models
     public sealed class PurchaseModel
     {
         [Preserve]
-        public PurchaseModel(string purchaseId, string reward, string price)
+        public PurchaseModel(string purchaseId, ItemModel[]? reward, ItemModel[]? price)
         {
             PurchaseId = purchaseId;
             Reward = reward;
             Price = price;
         }
+
         [Preserve] public PurchaseModel(){}
         [Preserve] public string? PurchaseId { get; set; }
-        [Preserve] public string? Reward { get; set; }
-        [Preserve] public string? Price { get; set; }
+        [Preserve] public ItemModel[]? Reward { get; set; }
+        [Preserve] public ItemModel[]? Price { get; set; }
     }
 }

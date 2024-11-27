@@ -21,9 +21,9 @@ namespace KingonomyService.DB
             return await query.Execute().ConfigureAwait(false);
         }
 
-        public async Task<bool> AddPlayerItem(int playerId, string customId, string metadata)
+        public async Task<bool> AddPlayerItem(int playerId, ItemModel model)
         {
-            var query = new AddPlayerItemQuery(playerId, customId, metadata);
+            var query = new AddPlayerItemQuery(playerId, model.Id, model.IsStackable, model.Quantity, model.MetaData);
             return await query.Execute().ConfigureAwait(false);
         }
 
@@ -33,42 +33,9 @@ namespace KingonomyService.DB
             return await query.Execute().ConfigureAwait(false);
         }
 
-        public async Task<bool> ModifyPlayerItem(int playerId, int itemId, string metadata)
+        public async Task<bool> ModifyPlayerItem(int playerId, int itemId, float quantity, string? metadata)
         {
-            var query = new ModifyPlayerItemQuery(playerId, itemId, metadata);
-            return await query.Execute().ConfigureAwait(false);
-        }
-        #endregion
-
-        #region Resources
-
-        public async Task<List<ResourceModel>> GetResources(int playerId)
-        {
-            var query = new SelectPlayerResourcesQuery(playerId);
-            return await query.Execute().ConfigureAwait(false);
-        }
-
-        public async Task<List<ResourceModel>> GetResources(string playerUnityId)
-        {
-            var query = new SelectPlayerResourcesQuery(playerUnityId);
-            return await query.Execute().ConfigureAwait(false);
-        }
-
-        public async Task<bool> AddPlayerResources(int playerId, string resourceId, float value)
-        {
-            var query = new AddPlayerResourceQuery(playerId, resourceId, value);
-            return await query.Execute().ConfigureAwait(false);
-        }
-
-        public async Task<bool> IncreasePlayerResource(int playerId, string itemId, float value)
-        {
-            var query = new ModifyResourceValueQuery(playerId, itemId, MathF.Abs(value));
-            return await query.Execute().ConfigureAwait(false);
-        }
-
-        public async Task<bool> DecreasePlayerResource(int playerId, string itemId, float value)
-        {
-            var query = new ModifyResourceValueQuery(playerId, itemId, -MathF.Abs(value));
+            var query = new ModifyPlayerItemQuery(playerId, itemId, quantity, metadata);
             return await query.Execute().ConfigureAwait(false);
         }
         #endregion

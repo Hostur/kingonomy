@@ -35,7 +35,7 @@ namespace KingonomyService.DB.Queries
                         byte role = reader.GetByte(2);
                         string metadata = reader.GetString(3);
 
-                        result = new PlayerModel(id, unityId, (Role)role, metadata, null, null);
+                        result = new PlayerModel(id, unityId, (Role)role, metadata, null);
                     }
 
                     await reader.CloseAsync().ConfigureAwait(false);
@@ -45,7 +45,6 @@ namespace KingonomyService.DB.Queries
                 if (result?.Role == Role.Player && _command.Connection != null)
                 {
                     result.Items = (await new SelectPlayerItemsQuery(result.Id).Execute(_command.Connection)).ToArray();
-                    result.Resources = (await new SelectPlayerResourcesQuery(result.Id).Execute(_command.Connection)).ToArray();
                 }
 
                 return result;

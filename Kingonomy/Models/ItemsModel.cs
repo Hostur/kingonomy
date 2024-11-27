@@ -3,33 +3,33 @@
 namespace Kingonomy.Models
 {
     [Preserve, Serializable]
-    public sealed class ItemTemplateModel
+    public sealed class ItemModel
     {
+        [Preserve] public string Id { get; set; }
+        [Preserve] public bool IsStackable { get; set; }
+        [Preserve] public float Quantity { get; set; }
+        [Preserve] public string? MetaData { get; set; }
+
         [Preserve]
-        public ItemTemplateModel(string id, string metaData)
+        public ItemModel(string id, bool isStackable, float quantity, string metaData)
         {
             Id = id;
+            IsStackable = isStackable;
+            Quantity = quantity;
             MetaData = metaData;
         }
-        [Preserve] public ItemTemplateModel(){}
-        [Preserve] public string? Id { get; set; }
-        [Preserve] public string? MetaData { get; set; }
     }
 
     [Preserve, Serializable]
     public sealed class PlayerItemModel
     {
-        [Preserve]
-        public PlayerItemModel(int? playerItemId, string? itemId, string? metaData)
-        {
-            PlayerItemId = playerItemId;
-            ItemId = itemId;
-            MetaData = metaData;
-        }
+        [Preserve] public int PlayerItemId { get; set; }
+        [Preserve] public ItemModel Item { get; set; }
 
-        [Preserve] public PlayerItemModel(){}
-        [Preserve] public int? PlayerItemId { get; set; }
-        [Preserve] public string? ItemId { get; set; }
-        [Preserve] public string? MetaData { get; set; }
+        [Preserve]
+        public PlayerItemModel(int playerItemId, ItemModel item)
+        { PlayerItemId = playerItemId;
+           Item = item;
+        }
     }
 }

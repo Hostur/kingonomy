@@ -11,13 +11,13 @@ namespace Kingonomy
         private readonly PlayerItemModel _model;
         private JsonObject? _metaData;
         public bool Modified;
-        public string? Id => _model.ItemId;
+        public string? Id => _model.Item.Id;
         public int? PlayerItemId => _model.PlayerItemId;
 
         public Item(PlayerItemModel model)
         {
             _model = model;
-            _metaData = model?.MetaData != null ? JsonNode.Parse(model.MetaData)?.AsObject() : new JsonObject();
+            _metaData = model?.Item.MetaData != null ? JsonNode.Parse(model.Item.MetaData)?.AsObject() : new JsonObject();
             Modified = false;
         }
 

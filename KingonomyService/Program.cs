@@ -12,7 +12,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<DBProvider>();
 builder.Services.AddSingleton<ItemsService>();
-builder.Services.AddSingleton<ResourcesService>();
 builder.Services.AddSingleton<UnityAuthorizationService>();
 builder.Services.AddSingleton<PurchaseService>();
 builder.Services.AddSingleton<UserService>();

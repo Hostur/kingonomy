@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Kingonomy
+﻿namespace Kingonomy
 {
     public sealed class Kingonomy
     {

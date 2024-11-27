@@ -57,15 +57,5 @@ namespace KingonomyService.Services
             await _cache.SetRecordAsync(accessToken, player, TimeSpan.FromDays(1), TimeSpan.FromDays(1))
                 .ConfigureAwait(false);
         }
-
-        public async Task RefreshPlayerResources(string accessToken, ResourceModel[] resources)
-        {
-            var player = await GetPlayer(accessToken).ConfigureAwait(false);
-            if (player == null) return;
-
-            player.Resources = resources;
-            await _cache.SetRecordAsync(accessToken, player, TimeSpan.FromDays(1), TimeSpan.FromDays(1))
-                .ConfigureAwait(false);
-        }
     }
 }

@@ -55,54 +55,6 @@ namespace Kingonomy.Providers
             yield return Get(GetUrl(GET_PLAYER), _authorizationToken, http);
         }
 
-        #region Resources
-        public IEnumerator GetResources(IUnityHttp<ResourceModel[]> http)
-        {
-            yield return Get(GetUrl(GET_RESOURCES), _authorizationToken, http);
-        }
-
-        /// <summary>
-        /// Require extended permissions [KingonomySettings.AuthorizationToken].
-        /// </summary>
-        public IEnumerator GetResources(IUnityHttp<ResourceModel[]> http, string playerUnityId)
-        {
-            yield return Get(GetUrl(string.Format(GET_PLAYER_RESOURCES, playerUnityId)), KingonomySettings.AuthorizationToken, http);
-        }
-
-        /// <summary>
-        /// Increment given resource by a given value.
-        /// If resource is not presented in player resources it will work like SetResource.
-        /// </summary>
-        public IEnumerator IncrementResource(IUnityHttp<bool> http, string playerUnityId, string resourceId, float value)
-        {
-            yield return Post(GetUrl(string.Format(POST_INCREMENT_PLAYER_RESOURCE, playerUnityId, resourceId, value)), http);
-        }
-
-        /// <summary>
-        /// Decrement given resource by a given value.
-        /// If resource is not presented or the result gonna be negative it will end up with an error.
-        /// </summary>
-        public IEnumerator DecrementResource(IUnityHttp<bool> http, string playerUnityId, string resourceId, float value)
-        {
-            yield return Post(GetUrl(string.Format(POST_DECREMENT_PLAYER_RESOURCE, playerUnityId, resourceId, value)), http);
-        }
-
-        /// <summary>
-        /// Set resource to a given value.
-        /// IMPORTANT - value have to be positive.
-        /// </summary>
-        public IEnumerator SetResource(IUnityHttp<bool> http, string playerUnityId, string resourceId, float value)
-        {
-            if (value < 0)
-            {
-                http?.OnError?.Invoke("SetResource value have to be >= 0");
-                yield break;
-            }
-
-            yield return Post(GetUrl(string.Format(POST_SET_PLAYER_RESOURCE, playerUnityId, resourceId, value)), http);
-        }
-        #endregion
-
         #region Items
 
         public IEnumerator GetItems(IUnityHttp<PlayerItemModel[]> http)
@@ -136,9 +88,9 @@ namespace Kingonomy.Providers
 
         #region Development
 
-        public IEnumerator AddOrModifyItem(IUnityHttp<bool> http, ItemTemplateModel itemTemplateModel)
+        public IEnumerator AddOrModifyItem(IUnityHttp<bool> http, ItemModel itemModel)
         {
-            yield return Post(GetUrl(POST_ADD_OR_MODIFY_ITEM), itemTemplateModel, http);
+            yield return Post(GetUrl(POST_ADD_OR_MODIFY_ITEM), itemModel, http);
         }
 
         #endregion

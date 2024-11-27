@@ -30,13 +30,34 @@ namespace KingonomyService.Services
             return result;
         }
 
-        public async Task<bool> AddPlayerItem(int playerId, string customId, string metadata)
+        public async Task<bool> AddPlayerItem(int playerId, ItemModel model)
         {
-            bool added = await _dbProvider.AddPlayerItem(playerId, customId, metadata).ConfigureAwait(false);
-            if (added)
-                await RefreshItemsCache(playerId);
+            if (model.IsStackable)
+            {
+                var items = await GetItems(playerId);
+                var item = items.FirstOrDefault(s => s.Item.Id == model.Id);
+                if (item != null)
+                {
+                    item.Item.Quantity += model.Quantity;
+                    return await ModifyPlayerItem(playerId, item.PlayerItemId, item.Item).ConfigureAwait(false);
+                }
+                else
+                {
+                    bool added = await _dbProvider.AddPlayerItem(playerId, model).ConfigureAwait(false);
+                    if (added)
+                        await RefreshItemsCache(playerId);
 
-            return added;
+                    return added;
+                }
+            }
+            else
+            {
+                bool added = await _dbProvider.AddPlayerItem(playerId, model).ConfigureAwait(false);
+                if (added)
+                    await RefreshItemsCache(playerId);
+
+                return added;
+            }
         }
 
         public async Task<bool> DeletePlayerItem(int playerId, int itemId)
@@ -47,9 +68,9 @@ namespace KingonomyService.Services
             return deleted;
         }
 
-        public async Task<bool> ModifyPlayerItem(int playerId, int itemId, string metadata)
+        public async Task<bool> ModifyPlayerItem(int playerId, int itemId, ItemModel model)
         {
-            bool modified = await _dbProvider.ModifyPlayerItem(playerId, itemId, metadata).ConfigureAwait(false);
+            bool modified = await _dbProvider.ModifyPlayerItem(playerId, itemId, model.Quantity, model.MetaData).ConfigureAwait(false);
             if (modified)
                 await RefreshItemsCache(playerId);
 

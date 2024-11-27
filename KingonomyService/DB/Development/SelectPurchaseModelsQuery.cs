@@ -1,5 +1,6 @@
 ﻿using Kingonomy.Models;
 using KingonomyService.DB.Base;
+using Newtonsoft.Json;
 using Npgsql;
 
 namespace KingonomyService.DB.Development
@@ -27,7 +28,7 @@ namespace KingonomyService.DB.Development
                         string id = reader.GetString(0);
                         string reward = reader.GetString(1);
                         string price = reader.GetString(2);
-                        result.Add(new PurchaseModel(id, reward, price));
+                        result.Add(new PurchaseModel(id, JsonConvert.DeserializeObject<ItemModel[]?>(reward), JsonConvert.DeserializeObject<ItemModel[]?>(price)));
                     }
 
                     await reader.CloseAsync();

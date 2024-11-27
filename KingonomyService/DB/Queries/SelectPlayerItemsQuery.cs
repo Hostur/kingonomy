@@ -10,6 +10,8 @@ namespace KingonomyService.DB.Queries
             "SELECT " +
             "pi.id, " +
             "pi.custom_id, " +
+            "pi.stackable, " +
+            "pi.quantity, " +
             "pi.metadata " +
             "FROM player p " +
             "JOIN player_item pi ON pi.player_id = p.id " +
@@ -19,6 +21,8 @@ namespace KingonomyService.DB.Queries
             "SELECT " +
             "pi.id, " +
             "pi.custom_id, " +
+            "pi.stackable, " +
+            "pi.quantity, " +
             "pi.metadata " +
             "FROM player p " +
             "JOIN player_item pi ON pi.player_id = p.id " +
@@ -47,8 +51,11 @@ namespace KingonomyService.DB.Queries
                     {
                         int id = reader.GetInt32(0);
                         string itemId = reader.GetString(1);
-                        string metadata = reader.GetString(2);
-                        result.Add(new PlayerItemModel(id, itemId, metadata));
+                        bool stackable = reader.GetBoolean(2);
+                        float quantity = reader.GetFloat(3);
+                        string metadata = reader.GetString(4);
+                        var model = new ItemModel(itemId, stackable, quantity, metadata);
+                        result.Add(new PlayerItemModel(id, model));
                     }
 
                     await reader.CloseAsync();
@@ -71,8 +78,11 @@ namespace KingonomyService.DB.Queries
                 {
                     int id = reader.GetInt32(0);
                     string itemId = reader.GetString(1);
-                    string metadata = reader.GetString(2);
-                    result.Add(new PlayerItemModel(id, itemId, metadata));
+                    bool stackable = reader.GetBoolean(2);
+                    float quantity = reader.GetFloat(3);
+                    string metadata = reader.GetString(4);
+                    var model = new ItemModel(itemId, stackable, quantity, metadata);
+                    result.Add(new PlayerItemModel(id, model));
                 }
 
                 await reader.CloseAsync();
